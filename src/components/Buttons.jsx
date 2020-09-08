@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { updateCount } from "../store/likesSlice";
+import { updateCount } from "../store/slices/likesSlice";
 
 export default function Buttons() {
   const dispatch = useDispatch();

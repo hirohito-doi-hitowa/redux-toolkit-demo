@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { postComment } from "../store/commentsSlice";
+import { postComment } from "../store/slices/commentsSlice";
 
 export default function Form() {
   const dispatch = useDispatch();
