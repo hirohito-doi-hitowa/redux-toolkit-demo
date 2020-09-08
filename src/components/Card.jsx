@@ -2,7 +2,7 @@ import React from "react";
 import Count from "./Count";
 import Buttons from "./Buttons";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchImageAsync } from "../store/imageSlice";
+import { fetchImage } from "../store/imageSlice";
 
 export default function Card() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Card() {
       <button
         className="btn btn-light"
         onClick={() => {
-          dispatch(fetchImageAsync());
+          dispatch(fetchImage());
         }}
       >
         <i className="fa fa-chevron-right" />

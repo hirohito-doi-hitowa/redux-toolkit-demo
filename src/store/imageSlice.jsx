@@ -1,34 +1,42 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchImageAsync = () => {
-  return async (dispatch, getState) => {
+// thunk action
+export const fetchImage = createAsyncThunk(
+  "image/fetchImage",
+  async (arg, { getState }) => {
     const state = getState();
     const characterId = state.image.id + 1;
 
     const response = await fetch(
       `https://rickandmortyapi.com/api/character/${characterId}`
     );
-    const data = await response.json();
 
-    dispatch(fetchImage({ id: characterId, imageUrl: data.image }));
-  };
-};
+    return await response.json();
+  }
+);
 
+// slice
 export const imageSlice = createSlice({
   name: "image",
   initialState: {
     id: 1,
     imageUrl: `https://rickandmortyapi.com/api/character/avatar/1.jpeg`,
   },
-  reducers: {
-    fetchImage: (state, action) => {
-      const { id, imageUrl } = action.payload;
+  reducers: {},
+  extraReducers: {
+    [fetchImage.pending]: (state, action) => {
+      // APIを実行した後、結果が帰ってくるまでに行う処理
+    },
+    [fetchImage.fulfilled]: (state, action) => {
+      // 正常終了した際の処理
+      const { id, image } = action.payload;
       state.id = id;
-      state.imageUrl = imageUrl;
+      state.imageUrl = image;
+    },
+    [fetchImage.rejected]: (state, action) => {
+      // エラー時の処理
     },
   },
 });
-
-export const { fetchImage } = imageSlice.actions;
 
 export default imageSlice.reducer;
